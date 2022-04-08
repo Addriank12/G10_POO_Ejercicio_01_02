@@ -24,24 +24,49 @@ public class empleado
         int yearsTrabajados;
         totalCosto = this.horasTrabajadas*this.costoHora;
         yearsTrabajados = anioActual-this.anioIngreso;
-        extra = yearsTrabajados * 1.02;
-        result = totalCosto * extra;
+        extra = (yearsTrabajados * 2);
+        result = totalCosto * ((extra / 100) + 1);
         return result;
     }
     public double   calcularBonoHorasExtra(int maximoHorasTrabjadas)
     {
-        double result =1;
+        double result;
+        double horasExtra =  this.horasTrabajadas - maximoHorasTrabjadas;
+        if (horasExtra>0)
+        {
+            result = (this.costoHora * 2) * horasExtra;
+        }
+        else
+        {
+            result = 0;
+        }                
         return result;
     }
-    public double calcularImpuesto(int limite1, int limite2, int limite3)
+      public double calcularImpuesto(int limite1, int limite2, int limite3)
     {
-        double result =1;
-        return result;
-    }
-    public double calcularAPagar()
-    {
-        double result =0;
-        return result;
-    }
+        double resultado = 0;
+        double totalPago=this.costoHora*this.horasTrabajadas;
+        
+        double ingreso = this.calcularIngreso(anioIngreso);
+        
+        
+        if(ingreso <= limite1){
+            resultado=0;
+        }else{
+            if(ingreso > limite1 && ingreso <= limite2){
+                resultado=(5*totalPago)/100;
+            }else{
+                if(ingreso>limite2 && ingreso <= limite3){
+                    resultado=(12*totalPago)/100;
+                }else{
+                    if(ingreso>limite3){
+                        resultado=(25*totalPago)/100;
+                    }
+                }
+            }
+           
+        }
+return resultado;
+}
 }
 
